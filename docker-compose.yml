@@ -1,0 +1,24 @@
+version: "3.7"
+services:
+  api:
+    build: ./VJPassApp
+    ports:
+      - "8808:8808"
+    depends_on:
+      - databases
+  client:
+      build: ./client-docker
+      ports:
+        - "8807:8807"
+      depends_on:
+        - api
+  databases:
+    container_name: 'databases'
+    image: mysql
+    environment:
+      MYSQL_DATABASE: passworddb
+      MYSQL_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_USER: user
+    ports:
+      - "33006:3306"
